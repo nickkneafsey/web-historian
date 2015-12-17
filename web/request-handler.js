@@ -37,7 +37,7 @@ exports.handleRequest = function (req, res) {
       var newURL = body.slice(4);
       archive.addUrlToList(newURL, function(err, content){
         archive.downloadUrls([newURL]);
-        httpHelp.headers['Location'] = archive.paths.archivedSites + '/' + newURL; 
+        httpHelp.headers['Location'] = '/' + newURL; 
         res.writeHead(302, httpHelp.headers);
         res.end();
       });
