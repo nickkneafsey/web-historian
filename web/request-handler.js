@@ -17,14 +17,9 @@ exports.handleRequest = function (req, res) {
         if (err) throw err;
         else {
           files = contents;
-          console.log(files,'FILES');
-          console.log(req.url.slice(1), "URL");
           if (_.contains(files, req.url.slice(1))){
             var asset = req.url;
-            // console.log(asset, "ASSET")
-            // console.log(archive.paths.archivedSites+asset,"ARCHIVE");
             httpHelp.serveAssets(res, archive.paths.archivedSites+asset); 
-
           } else {
             res.writeHead(404,httpHelp.headers);
             res.end();
@@ -32,6 +27,26 @@ exports.handleRequest = function (req, res) {
         }
       });
     }
+  }
+  else if (req.method === "POST") {   
+    var body = "";
+    req.on('data', function (chunk) {
+      body += chunk;
+    });
+    req.on('end', function () {
+      console.log('POSTed: ' + body);
+      newURL=body.slice(4);
+      console.log(newURL);
+      // res.writeHead(200);
+      archive.addUrlToList(newURL+'\n', function(err, content){
+        console.log("CONTENT", content);
+          // console.log("ERR", err);
+
+          res.writeHead(302, httpHelp.headers);
+          res.end();
+      });
+      // res.end(postHTML);
+  });
 
   } 
   // res.end(archive.paths.list);
