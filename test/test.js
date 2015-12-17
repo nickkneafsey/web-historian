@@ -84,6 +84,8 @@ describe("archive helpers", function(){
 
       archive.readListOfUrls(function(urls){
         expect(urls).to.deep.equal(urlArray);
+        // console.log("url",urls);
+        // console.log("urlArray", urlArray);
         done();
       });
     });
@@ -155,4 +157,3 @@ describe("archive helpers", function(){
     });
   });
 });
-
