@@ -61,6 +61,11 @@ exports.isUrlArchived = function(url, callback) {
   });
 };
 
-exports.downloadUrls = function() {
-  
+exports.downloadUrls = function(urlArray) {
+  _.each(urlArray,function(url){ 
+    fs.writeFile(exports.paths.archivedSites+url, url, function(err){
+      if (err) throw err;
+    });
+    //fs.appendFile(exports.paths.archivedSites, url);
+  });
 };
