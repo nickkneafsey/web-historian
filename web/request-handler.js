@@ -34,18 +34,13 @@ exports.handleRequest = function (req, res) {
       body += chunk;
     });
     req.on('end', function () {
-      console.log('POSTed: ' + body);
-      newURL=body.slice(4);
-      console.log(newURL);
-      // res.writeHead(200);
-      archive.addUrlToList(newURL+'\n', function(err, content){
-        console.log("CONTENT", content);
-          // console.log("ERR", err);
-
-          res.writeHead(302, httpHelp.headers);
-          res.end();
+      var newURL = body.slice(4);
+      archive.addUrlToList(newURL, function(err, content){
+        archive.downloadUrls([newURL]);
+        httpHelp.headers['Location'] = archive.paths.archivedSites + '/' + newURL; 
+        res.writeHead(302, httpHelp.headers);
+        res.end();
       });
-      // res.end(postHTML);
   });
 
   } 

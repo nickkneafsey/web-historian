@@ -78,7 +78,7 @@ describe("server", function() {
 
 describe("archive helpers", function(){
   describe("#readListOfUrls", function () {
-    xit("should read urls from sites.txt", function (done){
+    it("should read urls from sites.txt", function (done){
       var urlArray = ["example1.com", "example2.com"];
       fs.writeFileSync(archive.paths.list, urlArray.join("\n"));
 
@@ -92,7 +92,7 @@ describe("archive helpers", function(){
   });
 
   describe("#isUrlInList", function () {
-    xit("should check if a url is in the list", function (done) {
+    it("should check if a url is in the list", function (done) {
       var urlArray = ["example1.com", "example2.com"];
       fs.writeFileSync(archive.paths.list, urlArray.join("\n"));
 
@@ -112,7 +112,7 @@ describe("archive helpers", function(){
   });
 
   describe("#addUrlToList", function () {
-    xit("should add a url to the list", function (done) {
+    it("should add a url to the list", function (done) {
       var urlArray = ["example1.com", "example2.com\n"];
       fs.writeFileSync(archive.paths.list, urlArray.join("\n"));
 
@@ -125,7 +125,7 @@ describe("archive helpers", function(){
     });
   });
 
-  xdescribe("#isUrlArchived", function () {
+  describe("#isUrlArchived", function () {
     it("should check if a url is archived", function (done) {
       fs.writeFileSync(archive.paths.archivedSites + "/www.example.com", "blah blah");
 
@@ -144,7 +144,7 @@ describe("archive helpers", function(){
     });
   });
 
-  xdescribe("#downloadUrls", function () {
+  describe("#downloadUrls", function () {
     it("should download all pending urls in the list", function (done) {
       var urlArray = ["www.example.com", "www.google.com"];
       archive.downloadUrls(urlArray);

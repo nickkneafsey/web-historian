@@ -44,7 +44,7 @@ exports.isUrlInList = function(url, callback) {
 
 exports.addUrlToList = function(url, callback) {
   //console.log(url);
-  fs.appendFile(exports.paths.list, url ,'utf8', function(err, content){
+  fs.appendFile(exports.paths.list, url+'\n' ,'utf8', function(err, content){
     if (err) callback(err);
     else callback(err, content);
   });
