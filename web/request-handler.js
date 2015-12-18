@@ -1,7 +1,6 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var httpHelp = require('./http-helpers');
-var fetcher = require('../workers/htmlfetcher.js');
 var fs = require('fs');
 var _ = require('underscore');
 // require more modules/folders here!
@@ -22,8 +21,10 @@ exports.handleRequest = function (req, res) {
             var asset = req.url;
             httpHelp.serveAssets(res, archive.paths.archivedSites+asset); 
           } else {
-            res.writeHead(404,httpHelp.headers);
-            res.end();
+            // res.writeHead(404,httpHelp.headers);
+            var loading = '/public/loading.html';
+            httpHelp.serveAssets(res,__dirname+loading);
+            // res.end();
           }
         }
       });
@@ -37,7 +38,7 @@ exports.handleRequest = function (req, res) {
     req.on('end', function () {
       var newURL = body.slice(4);
       archive.addUrlToList(newURL, function(err, content){
-        //archive.downloadUrls([newURL]);
+        // archive.downloadUrls([newURL]);
         httpHelp.headers['Location'] ='/' + newURL; 
         res.writeHead(302, httpHelp.headers);
         res.end();
