@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var request = require('request');
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -62,11 +63,42 @@ exports.isUrlArchived = function(url, callback) {
   });
 };
 
+// var requester = function(url){
+//   request('http://'+url, function(err, response, body){
+//     if (err){
+//       throw err;
+//     } else {
+//       console.log("BODUY",body);
+//       return body;
+//     }
+//   });
+// };
+
 exports.downloadUrls = function(urlArray) {
-  _.each(urlArray,function(url){ 
-    fs.writeFile(exports.paths.archivedSites+'/'+url, url, function(err){
-      if (err) throw err;
+  // Iterate over urls and pipe to new files
+  // _.each(urlArray, function (url) {
+  //   if (!url) { return; }
+  //   request('http://' + url).pipe(fs.createWriteStream(exports.paths.archivedSites + "/" + url));
+  // });
+
+
+  _.each(urlArray, function(url){
+    request('http://' + url, function(err, response, body) {
+      if (err){console.log("ERROR")}
+      else {
+        //console.log("BODUY",body);
+        fs.writeFile(exports.paths.archivedSites+'/'+url, body, function(err){
+          if (err) throw err;
+        });
+      }
     });
-    //fs.appendFile(exports.paths.archivedSites, url);
   });
+
+  // _.each(urlArray,function(url){
+  //   fs.writeFile(exports.paths.archivedSites+'/'+url, request('http://'+url), function(err){
+  //     if (err) throw err;
+  //   });
+  //   //fs.appendFile(exports.paths.archivedSites, url);
+  // });
+  
 };
